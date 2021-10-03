@@ -1,0 +1,64 @@
+
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: cgomez
+  labels:
+    name: cgomez
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cgomez-deployment
+  namespace: cgomez
+  labels:
+    app: cgomez
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cgomez
+  template:
+    metadata:
+      labels:
+        app: cgomez
+    spec:
+      nodeSelector:
+        purpose: general
+      containers:
+      - name: cgomez
+        image: charlie83gs/devops_main_page:latest
+        ports:
+        - containerPort: 8080
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cgomez-service
+  namespace: cgomez
+spec:
+  selector:
+    app: cgomez
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080
+---
+apiVersion: networking.istio.io/v1alpha3
+kind: VirtualService
+metadata:
+  name: cgomez
+  namespace: cgomez
+spec:
+  hosts:
+  - "*"
+  gateways:
+  - istio-custom/devops-gateway
+  http:
+    - name: "cgomez-routes"
+      match:
+      - uri: 
+          prefix: "/cgomez"
+      route:
+        - destination:
+            host: cgomez-service.cgomez.svc.cluster.local
