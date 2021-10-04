@@ -27,7 +27,7 @@ spec:
         purpose: general
       containers:
       - name: cgomez
-        image: charlie83gs/devops_main_page:latest
+        image: charlie83gs/react_page:latest
         ports:
         - containerPort: 8080
 ---
