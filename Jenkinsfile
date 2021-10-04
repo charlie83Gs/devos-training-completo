@@ -23,10 +23,6 @@ podTemplate(yaml: '''
                   - sleep
                   args:
                   - 99d
-                  resources:
-                    limits: {}
-                    requests:
-                      cpu: 500m
                 - name: kubectl
                   image: bitnami/kubectl:1.22.2
                   securityContext:
@@ -64,7 +60,8 @@ podTemplate(yaml: '''
           sh 'mkdir -p ~/.kube/'
           sh 'cp $FILE ~/.kube/config'
           sh 'kubectl apply -f page.yaml'
-          sh 'kubectl rollout restart -n landing deployment/cgomez-deployment'
+          sh 'kubectl label namespace cgomez istio-injection=enabled'
+          sh 'kubectl rollout restart -n cgomez deployment/cgomez-deployment'
         }
       }
     }
