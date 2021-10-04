@@ -49,7 +49,7 @@ podTemplate(yaml: '''
         regexpFilterExpression: 'refs/heads/' +  'main'
     ]])])
     stage('Build with Kaniko') {
-      git branch: 'main', credentialsId: 'github_access', url: 'https://github.com/charlie83Gs/devops-training'
+      git branch: 'main', credentialsId: 'github_access', url: 'https://github.com/charlie83Gs/devos-training-completo'
       container('kaniko') {
         withCredentials([file(credentialsId: 'dockerhub', variable: 'FILE')]) {
           sh 'cp $FILE /kaniko/.docker/config.json'
@@ -58,7 +58,7 @@ podTemplate(yaml: '''
       }
     }
     stage('Deploy to kubernetes') {
-      git branch: 'main', credentialsId: 'github_access', url: 'https://github.com/charlie83Gs/devops-training'
+      git branch: 'main', credentialsId: 'github_access', url: 'https://github.com/charlie83Gs/devos-training-completo'
       container('kubectl') {
         withCredentials([file(credentialsId: 'kubernetes-config-file', variable: 'FILE')]) {
           sh 'mkdir -p ~/.kube/'
