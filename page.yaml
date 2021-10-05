@@ -30,6 +30,7 @@ spec:
         image: charlie83gs/react_page:latest
         ports:
         - containerPort: 3000
+      
 ---
 apiVersion: v1
 kind: Service
@@ -62,3 +63,4 @@ spec:
       route:
         - destination:
             host: cgomez-service.cgomez.svc.cluster.local
+
