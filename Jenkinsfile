@@ -42,7 +42,7 @@ podTemplate(yaml: '''
         token: 'cgomez_cd',
         genericVariables: [[key: 'ref', value: '$.ref']],
         regexpFilterText:"\$ref",
-        regexpFilterExpression: 'refs/heads/' +  'main'
+        regexpFilterExpression: '.*main.*'
     ]])])
     stage('Build with Kaniko') {
       git branch: 'main', credentialsId: 'github_access', url: 'https://github.com/charlie83Gs/devos-training-completo'
