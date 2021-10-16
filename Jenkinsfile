@@ -39,7 +39,7 @@ podTemplate(yaml: '''
     properties([
       pipelineTriggers([[
         $class: 'GenericTrigger',
-        token: 'cgomez',
+        token: 'cgomez_cd',
         genericVariables: [[key: 'ref', value: '$.ref']],
         regexpFilterText:"\$ref",
         regexpFilterExpression: 'refs/heads/' +  'main'
